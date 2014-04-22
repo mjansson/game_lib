@@ -1,0 +1,38 @@
+
+import os.path
+
+Import("env")
+
+
+# SOURCES
+
+gamesources = [
+
+	'game.c'
+
+	]
+
+gameheaders = [
+
+	'game.h'
+
+	]
+
+
+# ADD INTERNAL FLAGS
+
+libenv = env.Clone()
+libenv.Append( CPPDEFINES=['GAME_COMPILE=1'] )
+
+
+# OUTPUTS
+
+env['gamelib'] = libenv.StaticLibrary( 'game', gamesources )
+
+
+# DEPENDENCIES
+
+
+# INSTALLS
+
+libenv.AddPostAction( 'game', libenv.Install( '#lib/${platform}${platformsuffix}/${buildprofile}', [ env['gamelib'] ] ) )

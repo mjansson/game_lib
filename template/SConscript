@@ -1,0 +1,19 @@
+import os.path
+
+Import("env")
+
+# TEMPLATE GAME
+gamesources = [ 'empty/empty.c' ]
+
+gameenv = env.Clone()
+gameenv.Append( CPPPATH=['#/template'] )
+gameenv.Append( LIBPATH=['#/lib/${platform}${platformsuffix}/${buildprofile}'] )
+gameenv.Append( LIBS=[ 'game', 'foundation' ] )
+
+if gameenv['platform'] == 'linux':
+	gameenv.Append( LIBS=[ 'dl', 'rt', 'm' ] )
+elif gameenv['platform'] == 'raspberrypi':
+	gameenv.Append( LIBS=[ 'bcm_host', 'rt', 'm' ] )
+
+env['emptygame'] = gameenv.Program( 'emptygame${prgsuffix}', gamesources )
+gameenv.AddPostAction( 'emptygame${prgsuffix}', gameenv.Install( '#bin/${platform}${platformsuffix}/${buildprofile}', [ env['emptygame'] ] ) )
