@@ -12,12 +12,16 @@
 #include <game/game.h>
 
 
-application_t game_initialize( void )
+application_t game_declare( void )
 {
 	application_t application = {0};
-	application.name = "Game library template game";
+
+	application.name       = "Game library template game";
 	application.short_name = "empty_game";
 	application.config_dir = "empty_game";
-	
+	application.version    = version_make( 0, 0, 1, 1, 0 );
+
+	game_reference();
+
 	return application;
 }

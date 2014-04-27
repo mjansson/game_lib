@@ -20,7 +20,14 @@
 #include <game/types.h>
 
 
-/*! Initialization function, declare the game application. This function
-    should be implemented in the game.
+/*! Declare the game application. This function should be implemented in the game.
     \return                        Application definition */
- GAME_EXTERN application_t         game_initialize( void );
+ GAME_EXTERN application_t         game_declare( void );
+
+ /*! Reference symbols */
+ GAME_API void                     game_reference( void );
+
+/*! Run game loop
+    \param arg                     Argument
+    \return                        Result */
+GAME_API int                       game_run( void* arg );

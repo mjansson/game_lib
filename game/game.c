@@ -12,33 +12,26 @@
 #include <game/game.h>
 
 
-int main_initialize( void )
-{
-	application_t application = game_initialize();
+static int game_loop( void );
 
-#if BUILD_DEBUG
-	log_set_suppress( 0, ERRORLEVEL_NONE );
-	log_set_suppress( HASH_GAME, ERRORLEVEL_NONE );
-#elif BUILD_RELEASE
-	log_set_suppress( 0, ERRORLEVEL_DEBUG );
-	log_set_suppress( HASH_GAME, ERRORLEVEL_DEBUG );
-#else
-	log_set_suppress( 0, ERRORLEVEL_INFO );
-	log_set_suppress( HASH_GAME, ERRORLEVEL_INFO );
-#endif
-	
-	return foundation_initialize( memory_system_malloc(), application );
+
+void game_reference( void )
+{
+	if( (intptr_t)main_initialize < 1 || (intptr_t)main_run < 1 || (intptr_t)main_shutdown < 1 )
+		log_debug( HASH_GAME, "" );
 }
 
 
-int main_run( void* main_arg )
+int game_run( void* arg )
 {
-	log_info( HASH_GAME, "Running game" );
+	return game_loop();
+}
+
+
+int game_loop( void )
+{
+	thread_set_main();
+	thread_set_name( "game_loop" );
+
 	return 0;
-}
-
-
-void main_shutdown( void )
-{
-	foundation_shutdown();
 }

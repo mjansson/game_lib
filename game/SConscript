@@ -8,7 +8,7 @@ Import("env")
 
 gamesources = [
 
-	'game.c'
+	'game.c', 'main.c'
 
 	]
 
